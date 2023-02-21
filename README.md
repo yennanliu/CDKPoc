@@ -2,7 +2,7 @@
 >AWS Cloud Development Kit (CDK)
 
 ```
-programming code --- CDK --> CloudFormation (CFN)
+programming code --- CDK --> CloudFormation (CFN) --> AWS infra
 ```
 
 - https://cdkworkshop.com/
