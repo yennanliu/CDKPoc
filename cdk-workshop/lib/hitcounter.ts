@@ -20,7 +20,7 @@ export class HitCounter extends Construct{
         super(scope, id);
         // https://cdkworkshop.com/20-typescript/40-hit-counter/300-resources.html
 
-        const table = new DynamoDB.table(this, 'Hits', { // TODO : double check this
+        const table = new dynamodb.Table(this, 'Hits', { // TODO : double check this
             partitionKey: { name: 'path', type: dynamodb.AttributeType.STRING }
         } )
 
