@@ -23,6 +23,9 @@ cdk deploy --hotswap
 # sync
 #  except that instead of being a one-shot operation, it monitors your code and assets for changes and attempts to perform a deployment automatically when a change is detected.
 cdk watch
+
+# destroy CDK
+cdk destroy CdkWorkshopStackS
 ```
 
 ## Ref
