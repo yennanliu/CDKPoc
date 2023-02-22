@@ -9,6 +9,15 @@ The `cdk.json` file tells the CDK Toolkit how to execute your app.
 ```bash
 # init project
 cdk init sample-app --language typescript
+
+# diff
+cdk diff
+
+# deploy
+cdk deploy
+
+# deploy (only code change)
+cdk deploy --hotswap
 ```
 
 ## Ref
