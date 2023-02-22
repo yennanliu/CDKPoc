@@ -25,7 +25,7 @@ cdk deploy --hotswap
 cdk watch
 
 # destroy CDK
-cdk destroy CdkWorkshopStackS
+cdk destroy CdkWorkshopStack
 ```
 
 ## Ref
