@@ -30,6 +30,7 @@ cdk destroy CdkWorkshopStack
 
 ## Ref
 - https://cdkworkshop.com/20-typescript/20-create-project/100-cdk-init.html
+- https://docs.aws.amazon.com/cdk/v2/guide/constructs.html
 
 
 ## Useful commands

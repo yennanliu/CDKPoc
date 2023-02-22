@@ -2,6 +2,7 @@ import * as cdk from 'aws-cdk-lib';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import { Construct } from 'constructs';
+import {RemovalPolicy} from 'aws-cdk-lib';
 
 // https://cdkworkshop.com/20-typescript/40-hit-counter/100-api.html
 
@@ -18,8 +19,10 @@ export interface HitCounterProps {
     constructor(scope: Construct, id: string, props: HitCounterProps) {
       super(scope, id);
   
+      // removalPolicy: RemovalPolicy.DESTROY,
       const table = new dynamodb.Table(this, 'Hits', {
-          partitionKey: { name: 'path', type: dynamodb.AttributeType.STRING }
+          partitionKey: { name: 'path', type: dynamodb.AttributeType.STRING },
+          removalPolicy: RemovalPolicy.DESTROY
       });
   
       this.handler = new lambda.Function(this, 'HitCounterHandler', {
