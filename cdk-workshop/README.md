@@ -34,6 +34,14 @@ cdk watch
 cdk destroy CdkWorkshopStack
 ```
 
+## API
+
+| API | Type | Purpose | Example cmd | Comment|
+| ----- | -------- | ---- | ----- | ---- |
+| Test | GET | | https://zzzz.execute-api.us-east-1.amazonaws.com/prod/ |
+| Test | GET | | https://zzzz.execute-api.us-east-1.amazonaws.com/prod/hello |
+| Test | GET | | https://zzzz.execute-api.us-east-1.amazonaws.com/prod/hello/zzzz |
+
 ## Ref
 - https://cdkworkshop.com/20-typescript/20-create-project/100-cdk-init.html
 - https://docs.aws.amazon.com/cdk/v2/guide/constructs.html
