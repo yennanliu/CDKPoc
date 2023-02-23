@@ -20,7 +20,15 @@ export class HitCounter extends Construct {
     super(scope, id);
 
     const table = new dynamodb.Table(this, 'Hits', {
-        partitionKey: { name: 'path', type: dynamodb.AttributeType.STRING }
+
+        partitionKey: {
+            name: 'path',
+            type: dynamodb.AttributeType.STRING }
+
+        // TODO : check why below cause app ERROR
+        // https://cdkworkshop.com/20-typescript/60-cleanups.html
+        // Set the DynamoDB table to be deleted upon stack deletion
+        //removalPolicy: cdk.RemovalPolicy.DESTROY
     });
 
     this.table = table;
