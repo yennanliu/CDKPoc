@@ -10,6 +10,9 @@ The `cdk.json` file tells the CDK Toolkit how to execute your app.
 # init project
 cdk init sample-app --language typescript
 
+# Synthesizes and prints the CloudFormation : template for this stack 
+cdk synthesize
+
 # diff
 cdk diff
 

@@ -19,7 +19,6 @@ export interface HitCounterProps {
     constructor(scope: Construct, id: string, props: HitCounterProps) {
       super(scope, id);
   
-      // removalPolicy: RemovalPolicy.DESTROY,
       const table = new dynamodb.Table(this, 'Hits', {
           partitionKey: { name: 'path', type: dynamodb.AttributeType.STRING },
           removalPolicy: RemovalPolicy.DESTROY
@@ -37,5 +36,8 @@ export interface HitCounterProps {
   
       // grant the lambda role read/write permissions to our table
       table.grantReadWriteData(this.handler);
+
+      // grant the lambda role invoke permissions to the downstream function
+      props.downstream.grantInvoke(this.handler);
     }
   }
