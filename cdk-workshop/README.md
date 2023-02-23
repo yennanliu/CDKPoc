@@ -6,7 +6,12 @@ which contains an Amazon SQS queue that is subscribed to an Amazon SNS topic.
 The `cdk.json` file tells the CDK Toolkit how to execute your app.
 
 ## Steps
+
 ```bash
+#-----------------------------
+# PART 1
+#-----------------------------
+
 # init project
 cdk init sample-app --language typescript
 
@@ -34,9 +39,34 @@ cdk watch
 cdk destroy CdkWorkshopStack
 ```
 
+```bash
+#-----------------------------
+# PART 2
+#-----------------------------
+
+# https://cdkworkshop.com/20-typescript/50-table-viewer/200-install.html
+
+# install dep
+npm install cdk-dynamo-table-viewer@0.2.0
+```
+
+## API
+
+| API | Type | Purpose | Example cmd | Comment|
+| ----- | -------- | ---- | ----- | ---- |
+| Test | GET | call lambda | https://zzzz.execute-api.us-east-1.amazonaws.com/prod/ |
+| Test | GET | call lambda | https://zzzz.execute-api.us-east-1.amazonaws.com/prod/hello |
+| Test | GET | call lambda | https://zzzz.execute-api.us-east-1.amazonaws.com/prod/hello/zzzz |
+| Test | GET | UI shows dynamo count| https://zzz.execute-api.us-east-1.amazonaws.com/prod/ |
+
 ## Ref
-- https://cdkworkshop.com/20-typescript/20-create-project/100-cdk-init.html
-- https://docs.aws.amazon.com/cdk/v2/guide/constructs.html
+
+- Workshop doc
+    - https://cdkworkshop.com/20-typescript/20-create-project/100-cdk-init.html
+- CDK constructs
+    - https://docs.aws.amazon.com/cdk/v2/guide/constructs.html
+- Lib
+    - https://www.npmjs.com/package/cdk-dynamo-table-viewer
 
 
 ## Useful commands

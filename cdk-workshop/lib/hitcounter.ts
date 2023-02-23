@@ -13,12 +13,25 @@ export class HitCounter extends Construct {
   /** allows accessing the counter function */
   public readonly handler: lambda.Function;
 
+  /** the hit counter table */
+  public readonly table: dynamodb.Table;
+
   constructor(scope: Construct, id: string, props: HitCounterProps) {
     super(scope, id);
 
     const table = new dynamodb.Table(this, 'Hits', {
-        partitionKey: { name: 'path', type: dynamodb.AttributeType.STRING }
+
+        partitionKey: {
+            name: 'path',
+            type: dynamodb.AttributeType.STRING }
+
+        // TODO : check why below cause app ERROR
+        // https://cdkworkshop.com/20-typescript/60-cleanups.html
+        // Set the DynamoDB table to be deleted upon stack deletion
+        //removalPolicy: cdk.RemovalPolicy.DESTROY
     });
+
+    this.table = table;
 
     this.handler = new lambda.Function(this, 'HitCounterHandler', {
         runtime: lambda.Runtime.NODEJS_14_X,
