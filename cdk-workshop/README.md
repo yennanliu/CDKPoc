@@ -54,9 +54,10 @@ npm install cdk-dynamo-table-viewer@0.2.0
 
 | API | Type | Purpose | Example cmd | Comment|
 | ----- | -------- | ---- | ----- | ---- |
-| Test | GET | | https://zzzz.execute-api.us-east-1.amazonaws.com/prod/ |
-| Test | GET | | https://zzzz.execute-api.us-east-1.amazonaws.com/prod/hello |
-| Test | GET | | https://zzzz.execute-api.us-east-1.amazonaws.com/prod/hello/zzzz |
+| Test | GET | call lambda | https://zzzz.execute-api.us-east-1.amazonaws.com/prod/ |
+| Test | GET | call lambda | https://zzzz.execute-api.us-east-1.amazonaws.com/prod/hello |
+| Test | GET | call lambda | https://zzzz.execute-api.us-east-1.amazonaws.com/prod/hello/zzzz |
+| Test | GET | UI shows dynamo count| https://zzz.execute-api.us-east-1.amazonaws.com/prod/ |
 
 ## Ref
 
