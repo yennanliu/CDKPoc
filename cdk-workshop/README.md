@@ -15,11 +15,14 @@ The `cdk.json` file tells the CDK Toolkit how to execute your app.
 # init project
 cdk init sample-app --language typescript
 
-# install the bootstrap stack into an environment
+# show all CDK
+cdk list # or : cdk list --long
+
+# (ONLY first time) install the bootstrap stack into an environment, save needed pkg in S3
 cdk bootstrap
 
 # Synthesizes and prints the CloudFormation : template for this stack 
-cdk synthesize
+cdk synth # or : cdk synthesize
 
 # diff
 cdk diff
