@@ -37,3 +37,9 @@ programming code -- CDK --> CloudFormation (CFN) ----> AWS infra
 ## Ref
 - TypeScript
 	- [Learn TypeScript – FreeCodeCamp](https://www.youtube.com/watch?v=30LWjhZzg50)
+- CDK tutorial
+	- src1
+		- https://ithelp.ithome.com.tw/users/20117701/ironman/3734
+		- https://www.youtube.com/watch?v=YwJViDmIuYM
+	- src2
+		- https://www.youtube.com/watch?v=T-H4nJQyMig
