@@ -1,10 +1,12 @@
 # CDKPoc
->AWS Cloud Development Kit (CDK)
+>AWS Cloud Development Kit (CDK) POC
 
 ```
-programming code --- CDK --> CloudFormation (CFN) --> AWS infra
+programming code -- CDK --> CloudFormation (CFN) ----> AWS infra
 ```
 
+- Primary language
+	- Typescript, Python
 - https://cdkworkshop.com/
 - https://github.com/aws-samples/aws-cdk-examples
 
