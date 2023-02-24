@@ -37,6 +37,14 @@ programming code -- CDK --> CloudFormation (CFN) ----> AWS infra
 - package.json - 您會在此處定義專案相依性，以及一些額外資訊和建置指令碼 (npm build、npm test、npm watch)。
 
 - cdk.json - 此檔案會向工具組指出如何執行你的應用程式，以及與 CDK 和你的專案相關的一些額外設定和參數。
+
+- tsconfig.json：typescript 設定檔
+
+- .npmignore：告訴 npm 應該要排除的文件
+
+- node_modules：nodejs 套件包執行完 npm install 後的文件都會安裝在此資料夾裡面
+
+- test：CDK 測試的程式位置
 ```
 
 ## Ref
