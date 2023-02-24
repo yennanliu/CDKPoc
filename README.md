@@ -10,6 +10,11 @@ programming code -- CDK --> CloudFormation (CFN) ----> AWS infra
 - https://cdkworkshop.com/
 - https://github.com/aws-samples/aws-cdk-examples
 
+- Tool
+	- VSCode
+		- plugin
+			- [AWS toolkit](https://marketplace.visualstudio.com/items?itemName=AmazonWebServices.aws-toolkit-vscode)
+
 ## Example CDK structure
 ```
 ├── bin
@@ -40,6 +45,6 @@ programming code -- CDK --> CloudFormation (CFN) ----> AWS infra
 - CDK tutorial
 	- src1
 		- https://ithelp.ithome.com.tw/users/20117701/ironman/3734
-		- https://www.youtube.com/watch?v=YwJViDmIuYM
+		- https://www.youtube.com/results?search_query=How+to+use+AWS+CDK%3F+%7C+%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8AWS+CDK%E4%BE%86%E9%96%8B%E7%99%BC
 	- src2
 		- https://www.youtube.com/watch?v=T-H4nJQyMig
