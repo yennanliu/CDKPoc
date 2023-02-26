@@ -1,2 +1,5 @@
 *.agdai
 MAlonzo/**
+cdk-workshop/.DS_Store
+**/.DS_Store
+.DS_Store
