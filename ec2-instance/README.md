@@ -6,11 +6,22 @@ which contains an Amazon SQS queue that is subscribed to an Amazon SNS topic.
 The `cdk.json` file tells the CDK Toolkit how to execute your app.
 
 ## Steps
+
 ```bash
 cdk init --language typescript
+
+# install
+npm install -g aws-cdk
+cdk bootstrap
+
+# build
+npm run build
+cdk diff
+cdk deploy
 ```
 
 ## Ref
+
 - https://ithelp.ithome.com.tw/articles/10243374
 - https://github.com/aws-samples/aws-cdk-examples/tree/master/typescript/ec2-instance
 
