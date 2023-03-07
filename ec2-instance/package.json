@@ -1,8 +1,8 @@
 {
-  "name": "ec2-app",
+  "name": "ec2-instance",
   "version": "0.1.0",
   "bin": {
-    "ec2-app": "bin/ec2-app.js"
+    "ec2-instance": "bin/ec2-instance.js"
   },
   "scripts": {
     "build": "tsc",
@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "aws-cdk-lib": "2.66.0",
-    "constructs": "^10.0.0"
+    "constructs": "^10.0.0",
+    "source-map-support": "^0.5.21"
   }
 }

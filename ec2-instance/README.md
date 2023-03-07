@@ -7,7 +7,7 @@ The `cdk.json` file tells the CDK Toolkit how to execute your app.
 
 ## Steps
 ```bash
-cdk init sample-app --language typescript
+cdk init --language typescript
 ```
 
 ## Ref
