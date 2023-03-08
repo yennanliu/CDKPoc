@@ -107,8 +107,8 @@ export class Ec2CdkStack extends cdk.Stack {
       const ec2Instance = new ec2.Instance(this, "Instance", {
         vpc,
         instanceType: ec2.InstanceType.of(
-          ec2.InstanceClass.T3,
-          ec2.InstanceSize.NANO
+          ec2.InstanceClass.T2,
+          ec2.InstanceSize.MEDIUM
         ),
         machineImage: new ec2.AmazonLinuxImage(),
         securityGroup: mySecurityGroup,
