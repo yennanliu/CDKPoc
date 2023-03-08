@@ -9,6 +9,12 @@
 ```bash
 mkdir custom-vpc1 && cd custom-vpc1
 cdk init --language typescript
+
+# update lib/custom-vpc1-stack.ts
+# update bin/custom-vpc1.ts
+
+cdk diff
+cdk deploy
 ```
 
 ## Ref
