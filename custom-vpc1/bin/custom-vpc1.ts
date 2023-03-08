@@ -3,7 +3,7 @@
 //import * as cdk from 'aws-cdk-lib';
 import { CustomVpc1Stack } from '../lib/custom-vpc1-stack';
 import * as cdk from '@aws-cdk/core';
-ß
+
 // Argument of type 'App' is not assignable to parameter of type 'Construct'
 // https://stackoverflow.com/questions/70652702/argument-of-type-app-is-not-assignable-to-parameter-of-type-construct
 

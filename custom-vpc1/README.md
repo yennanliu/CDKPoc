@@ -4,6 +4,13 @@
 - What's VPC?
     - VPC stands for Virtual Cloud Private Cloud. The easiest way to describe a VPC is as your own private data center within the AWS infrastructure. You get to decide the network addresses that you will use throughout your infrastructure. Since this is your network, you can decide to slice it up any way you prefer.
 
+## Commands
+
+```bash
+mkdir custom-vpc1 && cd custom-vpc1
+cdk init --language typescript
+```
+
 ## Ref
 
 - https://catalog.us-east-1.prod.workshops.aws/workshops/5962a836-b214-4fbf-9462-fedba7edcc9b/en-US/the-workshop/2-create-vpc
