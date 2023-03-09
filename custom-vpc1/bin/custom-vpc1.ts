@@ -8,7 +8,7 @@ import * as cdk from '@aws-cdk/core';
 // https://stackoverflow.com/questions/70652702/argument-of-type-app-is-not-assignable-to-parameter-of-type-construct
 
 const app = new cdk.App();
-new CustomVpc1Stack(app, 'CustomVpc1Stack');
+new CustomVpc1Stack(app, 'CustomVpc1Stack', {});
 
 // new CustomVpc1Stack(app, 'CustomVpc1Stack', {
 //   /* If you don't specify 'env', this stack will be environment-agnostic.

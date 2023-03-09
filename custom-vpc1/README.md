@@ -21,6 +21,13 @@ cdk deploy
 
 - https://catalog.us-east-1.prod.workshops.aws/workshops/5962a836-b214-4fbf-9462-fedba7edcc9b/en-US/the-workshop/2-create-vpc
 - https://github.com/aws-samples/aws-cdk-examples/tree/master/typescript/neptune-with-vpc
+- VPC
+    - https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Scenario1.html
+    - https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Scenario2.html
+    - https://ithelp.ithome.com.tw/articles/10243374
+- VPC interface doc
+    - https://docs.aws.amazon.com/cdk/api/v1/docs/@aws-cdk_aws-ec2.SubnetConfiguration.html
+    - https://docs.aws.amazon.com/cdk/api/v1/docs/@aws-cdk_aws-ec2.SubnetType.html
 
 ## Useful commands
 

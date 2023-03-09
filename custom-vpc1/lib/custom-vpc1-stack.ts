@@ -16,10 +16,16 @@ export class CustomVpc1Stack extends cdk.Stack {
       subnetConfiguration: [
         {
           cidrMask: 24,
-          name: 'Ingress',
+          name: 'my_vpc_subnet',
           subnetType: ec2.SubnetType.ISOLATED,
         }
       ]
     });
+
+    // const vpc = new ec2.Vpc(this, "VPC", {
+    //   natGateways: 1,
+    // });
+
   }
+  
 }
