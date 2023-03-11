@@ -24,7 +24,7 @@ export class EcsHelloworldStack extends cdk.Stack {
     const taskDefinition = new ecs.Ec2TaskDefinition(this, 'MyTaskDefinition', {
     });
 
-    const container = taskDefinition.addContainer("HarrierApplierKinesisContainer", {
+    taskDefinition.addContainer("myContainer", {
       image: ecs.ContainerImage.fromRegistry("metabase/metabase"),
       cpu: 2048,
       memoryReservationMiB: 4096,
@@ -33,13 +33,14 @@ export class EcsHelloworldStack extends cdk.Stack {
 
     cluster.addCapacity('MyGroupCapacity', {
       instanceType: new ec2.InstanceType("m5.2xlarge"),
+      keyName: "yen-dev-key1"
       //desiredCapacity: 2,
     });
 
     // https://docs.aws.amazon.com/cdk/api/v1/docs/@aws-cdk_aws-ecs.Ec2ServiceProps.html
-    const service = new ecs.Ec2Service(this, "EcsHelloworldService", {
-      cluster: cluster, 
-      taskDefinition: taskDefinition
+    new ecs.Ec2Service(this, "EcsHelloworldService", {
+      cluster: cluster,
+      taskDefinition: taskDefinition,
     })
 
 
@@ -55,5 +56,5 @@ export class EcsHelloworldStack extends cdk.Stack {
     // })
 
   }
-  
+
 }
