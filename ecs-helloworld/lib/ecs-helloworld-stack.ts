@@ -18,19 +18,33 @@ export class EcsHelloworldStack extends cdk.Stack {
     })
 
     const cluster = new ecs.Cluster(this, "MyCluster", {
-      vpc : vpc
+      vpc: vpc
     })
 
-    // Create a load-balanced Fargate service and make it public
-    new ecs_patterns.ApplicationLoadBalancedFargateService(this, "MyFargateService", {
-      cluster: cluster, // necessary
-      cpu: 512, // default : 256
-      desiredCount: 6, // default : 1
-      //taskImageOptions: { image: ecs.ContainerImage.fromRegistry("amazon/amazon-ecs-sample") },
-      taskImageOptions: { image: ecs.ContainerImage.fromRegistry("metabase/metabase") },
-      memoryLimitMiB: 2048,
-      publicLoadBalancer: true
-    })
+    const taskDefinition = new ecs.Ec2TaskDefinition(this, 'MyTaskDefinition', {
+    });
+
+    taskDefinition.addContainer("HarrierApplierKinesisContainer", {
+      image: ecs.ContainerImage.fromRegistry("metabase/metabase"),
+      cpu: 2048,
+      memoryReservationMiB: 4096
+    });
+
+    cluster.addCapacity('MyGroupCapacity', {
+      instanceType: new ec2.InstanceType("m5.2xlarge"),
+      desiredCapacity: 2,
+    });
+
+    // // Create a load-balanced Fargate service and make it public
+    // new ecs_patterns.ApplicationLoadBalancedFargateService(this, "MyFargateService", {
+    //   cluster: cluster, // necessary
+    //   cpu: 512, // default : 256
+    //   desiredCount: 6, // default : 1
+    //   //taskImageOptions: { image: ecs.ContainerImage.fromRegistry("amazon/amazon-ecs-sample") },
+    //   taskImageOptions: { image: ecs.ContainerImage.fromRegistry("metabase/metabase") },
+    //   memoryLimitMiB: 2048,
+    //   publicLoadBalancer: true
+    // })
 
   }
 }
