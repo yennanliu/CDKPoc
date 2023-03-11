@@ -24,16 +24,23 @@ export class EcsHelloworldStack extends cdk.Stack {
     const taskDefinition = new ecs.Ec2TaskDefinition(this, 'MyTaskDefinition', {
     });
 
-    taskDefinition.addContainer("HarrierApplierKinesisContainer", {
+    const container = taskDefinition.addContainer("HarrierApplierKinesisContainer", {
       image: ecs.ContainerImage.fromRegistry("metabase/metabase"),
       cpu: 2048,
-      memoryReservationMiB: 4096
+      memoryReservationMiB: 4096,
+      environment: { "my_key": "my_val" }
     });
 
     cluster.addCapacity('MyGroupCapacity', {
       instanceType: new ec2.InstanceType("m5.2xlarge"),
       desiredCapacity: 2,
     });
+
+    // https://docs.aws.amazon.com/cdk/api/v1/docs/@aws-cdk_aws-ecs.Ec2ServiceProps.html
+    const service = new ecs.Ec2Service(this, "EcsHelloworldService", {
+      cluster, taskDefinition
+    })
+
 
     // // Create a load-balanced Fargate service and make it public
     // new ecs_patterns.ApplicationLoadBalancedFargateService(this, "MyFargateService", {
