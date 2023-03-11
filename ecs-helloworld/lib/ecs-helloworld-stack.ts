@@ -5,6 +5,7 @@ import * as ec2 from "aws-cdk-lib/aws-ec2";
 import * as ecs from "aws-cdk-lib/aws-ecs";
 import * as ecs_patterns from "aws-cdk-lib/aws-ecs-patterns";
 
+
 // https://docs.aws.amazon.com/zh_tw/cdk/v2/guide/ecs_example.html
 
 
@@ -25,7 +26,8 @@ export class EcsHelloworldStack extends cdk.Stack {
       cluster: cluster, // necessary
       cpu: 512, // default : 256
       desiredCount: 6, // default : 1
-      taskImageOptions: { image: ecs.ContainerImage.fromRegistry("amazon/amazon-ecs-sample") },
+      //taskImageOptions: { image: ecs.ContainerImage.fromRegistry("amazon/amazon-ecs-sample") },
+      taskImageOptions: { image: ecs.ContainerImage.fromRegistry("metabase/metabase") },
       memoryLimitMiB: 2048,
       publicLoadBalancer: true
     })
