@@ -4,6 +4,7 @@ import { Construct } from 'constructs';
 import * as ec2 from "aws-cdk-lib/aws-ec2";
 import * as ecs from "aws-cdk-lib/aws-ecs";
 import * as ecs_patterns from "aws-cdk-lib/aws-ecs-patterns";
+import { SecurityGroup } from 'aws-cdk-lib/aws-ec2';
 
 
 // https://docs.aws.amazon.com/zh_tw/cdk/v2/guide/ecs_example.html
@@ -19,12 +20,20 @@ export class EcsHelloworldStack extends cdk.Stack {
     })
 
     const cluster = new ecs.Cluster(this, "MyCluster", {
-      vpc: vpc
+      //vpc: vpc
     })
+
+    const mySecurityGroup = ec2.SecurityGroup.fromSecurityGroupId(this, 'SG', 'sg-0cdce0e0f071f8a57', {
+      mutable: true
+    })
+    cluster.connections.addSecurityGroup(mySecurityGroup);
 
     cluster.addCapacity('MyGroupCapacity', {
       instanceType: new ec2.InstanceType("m5.xlarge"),
-      keyName: "yen-dev-key1"
+      keyName: "yen-dev-key1",
+      allowAllOutbound: true,
+      //associatePublicIpAddress: true,
+      //machineImageType: ecs.MachineImageType.BOTTLEROCKET
       //desiredCapacity: 2,
     });
 
@@ -39,7 +48,7 @@ export class EcsHelloworldStack extends cdk.Stack {
 
     const ecsService = new ecs_patterns.NetworkLoadBalancedEc2Service(this, "Ec2Service", {
       cluster,
-      memoryLimitMiB: 512,
+      memoryLimitMiB: 1024 * 3,
       taskImageOptions: {
         image: ecs.ContainerImage.fromRegistry("metabase/metabase"),
       }
@@ -57,8 +66,15 @@ export class EcsHelloworldStack extends cdk.Stack {
     
     const container = taskDefinition.addContainer("myContainer", {
       image: ecs.ContainerImage.fromRegistry("metabase/metabase"),
-      cpu: 2048,
+      cpu: 1024 * 10,
       memoryReservationMiB: 4096,
+      memoryLimitMiB: 35000,
+      portMappings: [
+        {
+            containerPort: 3000,
+            hostPort: 80
+        }
+    ],
       environment: { "my_key": "my_val" },
     });
 
