@@ -7,6 +7,7 @@ import * as ecs_patterns from "aws-cdk-lib/aws-ecs-patterns";
 
 
 // https://docs.aws.amazon.com/zh_tw/cdk/v2/guide/ecs_example.html
+// https://github.com/aws-samples/aws-cdk-examples/blob/master/typescript/ecs/ecs-network-load-balanced-service/index.ts
 
 
 export class EcsHelloworldStack extends cdk.Stack {
@@ -21,28 +22,50 @@ export class EcsHelloworldStack extends cdk.Stack {
       vpc: vpc
     })
 
+    cluster.addCapacity('MyGroupCapacity', {
+      instanceType: new ec2.InstanceType("m5.xlarge"),
+      keyName: "yen-dev-key1"
+      //desiredCapacity: 2,
+    });
+
     const taskDefinition = new ecs.Ec2TaskDefinition(this, 'MyTaskDefinition', {
     });
 
-    taskDefinition.addContainer("myContainer", {
+    // // https://docs.aws.amazon.com/cdk/api/v1/docs/@aws-cdk_aws-ecs.Ec2ServiceProps.html
+    // const service = new ecs.Ec2Service(this, "EcsHelloworldService", {
+    //   cluster: cluster,
+    //   taskDefinition: taskDefinition,
+    // })
+
+    const ecsService = new ecs_patterns.NetworkLoadBalancedEc2Service(this, "Ec2Service", {
+      cluster,
+      memoryLimitMiB: 512,
+      taskImageOptions: {
+        image: ecs.ContainerImage.fromRegistry("metabase/metabase"),
+      }
+    });
+
+    // Need target security group to allow all inbound traffic for
+    // ephemeral port range (when host port is 0).
+    const EPHEMERAL_PORT_RANGE = ec2.Port.tcpRange(0, 65535);
+    ecsService.service.connections.allowFromAnyIpv4(EPHEMERAL_PORT_RANGE);
+
+    new cdk.CfnOutput(this, "networkLoadBalancerURL", {
+      value: "https://"+ecsService.loadBalancer.loadBalancerDnsName,
+      description: "Network LoadBalancer URL"
+    });
+    
+    const container = taskDefinition.addContainer("myContainer", {
       image: ecs.ContainerImage.fromRegistry("metabase/metabase"),
       cpu: 2048,
       memoryReservationMiB: 4096,
       environment: { "my_key": "my_val" },
     });
 
-    cluster.addCapacity('MyGroupCapacity', {
-      instanceType: new ec2.InstanceType("m5.2xlarge"),
-      keyName: "yen-dev-key1"
-      //desiredCapacity: 2,
-    });
-
-    // https://docs.aws.amazon.com/cdk/api/v1/docs/@aws-cdk_aws-ecs.Ec2ServiceProps.html
-    new ecs.Ec2Service(this, "EcsHelloworldService", {
-      cluster: cluster,
-      taskDefinition: taskDefinition,
+    container.addPortMappings({
+      containerPort: 3000,
+      hostPort: 80
     })
-
 
     // // Create a load-balanced Fargate service and make it public
     // new ecs_patterns.ApplicationLoadBalancedFargateService(this, "MyFargateService", {

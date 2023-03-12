@@ -76,6 +76,19 @@ export class EcsHelloworld2Stack extends cdk.Stack {
       vpc: vpc
     })
 
+
+    // https://docs.aws.amazon.com/cdk/api/v1/docs/@aws-cdk_aws-ecs.CfnTaskDefinition.PortMappingProperty.html
+    // const portMappingProperty: ecs.CfnTaskDefinition.PortMappingProperty = {
+    //   appProtocol: 'myProtocol',
+    //   containerPort: 80,
+    //   containerPortRange: 'containerPortRange',
+    //   hostPort: 3000,
+    //   name: 'name',
+    //   protocol: 'protocol',
+    // };
+
+    //new ecs.PortM(234, 3242);
+
     // Create a load-balanced Fargate service and make it public
     new ecs_patterns.ApplicationLoadBalancedFargateService(this, "MyFargateService", {
       cluster: cluster, // necessary
@@ -84,7 +97,8 @@ export class EcsHelloworld2Stack extends cdk.Stack {
       //taskImageOptions: { image: ecs.ContainerImage.fromRegistry("amazon/amazon-ecs-sample") },
       taskImageOptions: { image: ecs.ContainerImage.fromRegistry("metabase/metabase") },
       memoryLimitMiB: 1024 * 3,
-      publicLoadBalancer: true
+      publicLoadBalancer: true,
+      listenerPort:80
     })
 
   }
