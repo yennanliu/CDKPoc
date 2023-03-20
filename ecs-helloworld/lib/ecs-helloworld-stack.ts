@@ -4,7 +4,7 @@ import { Construct } from 'constructs';
 import * as ec2 from "aws-cdk-lib/aws-ec2";
 import * as ecs from "aws-cdk-lib/aws-ecs";
 import * as ecs_patterns from "aws-cdk-lib/aws-ecs-patterns";
-import { SecurityGroup } from 'aws-cdk-lib/aws-ec2';
+//import { SecurityGroup } from 'aws-cdk-lib/aws-ec2';
 import * as elbv2 from 'aws-cdk-lib/aws-elasticloadbalancingv2';
 
 // https://docs.aws.amazon.com/zh_tw/cdk/v2/guide/ecs_example.html
@@ -23,8 +23,17 @@ export class EcsHelloworldStack extends cdk.Stack {
       vpc: vpc
     })
 
-    const mySecurityGroup = ec2.SecurityGroup.fromSecurityGroupId(this, 'sg-0cdce0e0f071f8a57', "sg-0cdce0e0f071f8a57", {
-      mutable: true,
+    const asg = cluster.addCapacity("metabase-capacity-group", {
+      instanceType: new ec2.InstanceType("m5.xlarge"),
+      keyName: "yen-dev-key1",
+    });
+
+    // const mySecurityGroup = ec2.SecurityGroup.fromSecurityGroupId(this, 'sg-0cdce0e0f071f8a57', "sg-0cdce0e0f071f8a57", {
+    //   mutable: true,
+    //   allowAllOutbound: true
+    // })
+    const mySecurityGroup = new ec2.SecurityGroup(this, "sg-0cdce0e0f071f8a57", {
+      vpc: vpc,
       allowAllOutbound: true
     })
     // https://stackoverflow.com/questions/57922113/add-ingress-rule-to-security-groups-using-aws-cdk
@@ -32,26 +41,19 @@ export class EcsHelloworldStack extends cdk.Stack {
     mySecurityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(3000), '3000 port');
     mySecurityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.allTraffic(), 'all traffic');
 
-
     cluster.connections.addSecurityGroup(mySecurityGroup);
 
-    cluster.addCapacity('MyGroupCapacity', {
-      instanceType: new ec2.InstanceType("m5.xlarge"),
-      keyName: "yen-dev-key1",
-      allowAllOutbound: true,
-      //associatePublicIpAddress: true,
-      //machineImageType: ecs.MachineImageType.BOTTLEROCKET
-      //desiredCapacity: 2,
-    });
+    // cluster.addCapacity('MyGroupCapacity', {
+    //   instanceType: new ec2.InstanceType("m5.xlarge"),
+    //   keyName: "yen-dev-key1",
+    //   allowAllOutbound: true,
+    //   //associatePublicIpAddress: true,
+    //   //machineImageType: ecs.MachineImageType.BOTTLEROCKET
+    //   //desiredCapacity: 2,
+    // });
 
     const taskDefinition = new ecs.Ec2TaskDefinition(this, 'MyTaskDefinition', {
     });
-
-    // // https://docs.aws.amazon.com/cdk/api/v1/docs/@aws-cdk_aws-ecs.Ec2ServiceProps.html
-    const service = new ecs.Ec2Service(this, "EcsHelloworldService", {
-      cluster: cluster,
-      taskDefinition: taskDefinition,
-    })
 
     // const ecsService = new ecs_patterns.NetworkLoadBalancedEc2Service(this, "Ec2Service", {
     //   cluster,
@@ -76,13 +78,12 @@ export class EcsHelloworldStack extends cdk.Stack {
       cpu: 1024 * 10,
       memoryReservationMiB: 4096,
       memoryLimitMiB: 35000,
-      portMappings: [
-        {
-          containerPort: 3000,
-          hostPort: 80
-        }
-      ],
-      environment: { "my_key": "my_val" },
+      // portMappings: [
+      //   {
+      //     containerPort: 3000,
+      //     hostPort: 80
+      //   }
+      // ],
     });
 
     container.addPortMappings({
@@ -90,6 +91,13 @@ export class EcsHelloworldStack extends cdk.Stack {
       hostPort: 80,
       protocol: ecs.Protocol.TCP
     });
+
+  
+      // // https://docs.aws.amazon.com/cdk/api/v1/docs/@aws-cdk_aws-ecs.Ec2ServiceProps.html
+      const service = new ecs.Ec2Service(this, "EcsHelloworldService", {
+        cluster: cluster,
+        taskDefinition: taskDefinition,
+      })
 
     const lb = new elbv2.NetworkLoadBalancer(this, "metabase-nlb", {
       vpc: vpc,
@@ -102,7 +110,7 @@ export class EcsHelloworldStack extends cdk.Stack {
     })
 
 
-    //const health_check = lb.h(interval=core.Duration.seconds(30), protocol=nlb.Protocol.TCP)
+    //const health_check = elbv2.HealthCheck
     listner.addTargets("ECS", {
       port: 80,
       targets: [service],
