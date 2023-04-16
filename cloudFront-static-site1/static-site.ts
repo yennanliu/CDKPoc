@@ -20,8 +20,10 @@ export class StaticSite extends Construct {
     constructor(parent: Stack, name: string, props: StaticSiteProps) {
         super(parent, name);
 
-        const zone = route53.HostedZone.fromLookup(this, 'Zone', { domainName: props.domainName });
-        const siteDomain = props.siteSubDomain + '.' + props.domainName;
+        // const zone = route53.HostedZone.fromLookup(this, 'Zone', { domainName: props.domainName });
+        // const siteDomain = props.siteSubDomain + '.' + props.domainName;
+        const zone = route53.HostedZone.fromLookup(this, 'Zone', { domainName: 'mystaticsite.com' });
+        const siteDomain = 'www' + '.' +  'mystaticsite.com';
         const cloudfrontOAI = new cloudfront.OriginAccessIdentity(this, 'cloudfront-OAI', {
             comment: `OAI for ${name}`
         });
@@ -92,11 +94,11 @@ export class StaticSite extends Construct {
         new CfnOutput(this, 'DistributionId', { value: distribution.distributionId });
 
         // Route53 alias record for the CloudFront distribution
-        new route53.ARecord(this, 'SiteAliasRecord', {
-            recordName: siteDomain,
-            target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(distribution)),
-            zone
-        });
+        // new route53.ARecord(this, 'SiteAliasRecord', {
+        //     recordName: siteDomain,
+        //     target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(distribution)),
+        //     zone
+        // });
 
         // Deploy site contents to S3 bucket
         new s3deploy.BucketDeployment(this, 'DeployWithInvalidation', {
