@@ -34,7 +34,7 @@ export class CloudFrontStaticSite2Stack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    const domainName = "example.com";
+    const domainName = "yendev1.com";
 
     const assetsBucket = new s3.Bucket(this, 'WebsiteBucket', {
       publicReadAccess: false,
