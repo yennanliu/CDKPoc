@@ -45,6 +45,13 @@ export class CloudFrontStaticSite2Stack extends Stack {
       encryption: s3.BucketEncryption.S3_MANAGED,
     });
 
+    // const bucketPolicy = new s3.BucketPolicy(this, 'MyBucketPolicyzzz', {
+    //   bucket: assetsBucket,
+    //   // the properties below are optional
+    //   removalPolicy: RemovalPolicy.DESTROY,
+    // });
+
+
     const cloudfrontOriginAccessIdentity = new cloudfront.OriginAccessIdentity(this, 'CloudFrontOriginAccessIdentity');
 
     assetsBucket.addToResourcePolicy(new iam.PolicyStatement({
@@ -116,6 +123,26 @@ export class CloudFrontStaticSite2Stack extends Stack {
         responseHeadersPolicy: responseHeaderPolicy
       },
     });
+
+    const oac = new cloudfront.CfnOriginAccessControl(this, 'AOC', {
+      originAccessControlConfig: {
+        name: 'AOC',
+        originAccessControlOriginType: 's3',
+        signingBehavior: 'always',
+        signingProtocol: 'sigv4',
+      },
+    })
+
+    const cfnDistribution = cloudfrontDistribution.node.defaultChild as cloudfront.CfnDistribution;
+    cfnDistribution.addPropertyOverride(
+      'DistributionConfig.Origins.0.S3OriginConfig.OriginAccessIdentity',
+      ''
+    );
+    cfnDistribution.addPropertyOverride(
+      'DistributionConfig.Origins.0.OriginAccessControlId',
+      oac.getAtt('Id')
+    );
+
 
     // new route53.ARecord(this, 'ARecord', {
     //   recordName: domainName,
