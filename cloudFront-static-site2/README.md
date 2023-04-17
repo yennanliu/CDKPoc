@@ -13,3 +13,5 @@ cdk deploy
 ## Ref
 - https://idanlupinsky.com/blog/static-site-deployment-using-aws-cloudfront-and-the-cdk/
 	- https://github.com/idanlupinsky/static-site-infra-demo
+- https://ithelp.ithome.com.tw/articles/10238801
+- https://ithelp.ithome.com.tw/articles/10242264
