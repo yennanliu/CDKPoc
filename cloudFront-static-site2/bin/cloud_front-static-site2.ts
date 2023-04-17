@@ -8,6 +8,6 @@ import 'source-map-support/register';
 // const app = new cdk.App();
 // new CloudFrontStaticSite2Stack(app, 'CloudFrontStaticSite2Stack');
 const app = new cdk.App();
-new CloudFrontStaticSite2Stack(app, 'StaticSiteInfraDemoStack', {
+new CloudFrontStaticSite2Stack(app, 'cloudFrontStaticSite2Stack', {
     env: { account: '774380182805', region: 'us-east-1' },
 });
