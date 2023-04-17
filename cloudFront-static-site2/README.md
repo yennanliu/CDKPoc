@@ -6,6 +6,7 @@
 ```bash
 mkdir cloudFront-static-site2 && cd cloudFront-static-site2
 cdk init sample-app --language typescript
+cdk bootstrap
 cdk deploy
 ```
 

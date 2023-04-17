@@ -34,7 +34,7 @@ export class CloudFrontStaticSite2Stack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    const domainName = "yendev1.com";
+    //const domainName = "dev.com";
 
     const assetsBucket = new s3.Bucket(this, 'WebsiteBucket', {
       publicReadAccess: false,
@@ -53,14 +53,15 @@ export class CloudFrontStaticSite2Stack extends Stack {
       principals: [new iam.CanonicalUserPrincipal(cloudfrontOriginAccessIdentity.cloudFrontOriginAccessIdentityS3CanonicalUserId)],
     }));
 
-    const zone = route53.HostedZone.fromLookup(this, 'HostedZone', { domainName: domainName });
+    //const zone = route53.HostedZone.fromLookup(this, 'HostedZone', { domainName: domainName });
+    //const zone = route53.HostedZone.fromLookup(this, 'HostedZone');
 
-    const certificate = new acm.DnsValidatedCertificate(this, 'SiteCertificate',
-      {
-        domainName: domainName,
-        hostedZone: zone,
-        region: 'us-east-1', // Cloudfront only checks this region for certificates.
-      });
+    // const certificate = new acm.DnsValidatedCertificate(this, 'SiteCertificate',
+    //   {
+    //     domainName: domainName,
+    //     hostedZone: zone,
+    //     region: 'us-east-1', // Cloudfront only checks this region for certificates.
+    //   });
 
     // Add a cloudfront Function to a Distribution
     const rewriteFunction = new cloudfront.Function(this, 'Function', {
@@ -100,8 +101,8 @@ export class CloudFrontStaticSite2Stack extends Stack {
     });
 
     const cloudfrontDistribution = new cloudfront.Distribution(this, 'CloudFrontDistribution', {
-      certificate: certificate,
-      domainNames: [domainName],
+      //certificate: certificate,
+      //domainNames: [domainName],
       defaultRootObject: 'index.html',
       defaultBehavior: {
         origin: new origins.S3Origin(assetsBucket, {
@@ -116,10 +117,11 @@ export class CloudFrontStaticSite2Stack extends Stack {
       },
     });
 
-    new route53.ARecord(this, 'ARecord', {
-      recordName: domainName,
-      target: route53.RecordTarget.fromAlias(new route53targets.CloudFrontTarget(cloudfrontDistribution)),
-      zone
-    });
+    // new route53.ARecord(this, 'ARecord', {
+    //   recordName: domainName,
+    //   target: route53.RecordTarget.fromAlias(new route53targets.CloudFrontTarget(cloudfrontDistribution)),
+    //   zone
+    // });
+
   }
 }
