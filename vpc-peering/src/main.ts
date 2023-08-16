@@ -82,8 +82,8 @@ const devEnv = {
  */
 const app = new App();
 
-const stack = new Stack(app, 'my-stack-dev', {env: devEnv})
-//const stack = new Stack(app, 'my-stack-dev')
+//const stack = new Stack(app, 'my-stack-dev', {env: devEnv})
+const stack = new Stack(app, 'my-stack-dev')
 
 new EksPeeringDemo(stack, 'demo')
 
