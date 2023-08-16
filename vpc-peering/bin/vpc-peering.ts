@@ -7,9 +7,15 @@ import { Construct } from 'constructs';
 
 // https://youtu.be/puUpjHWW44c?t=392
 
-export class MyStack extends Stack{
-    constructor(scope: Construct, id: string, props: StackProps = {}){
-        super(scope, id, props)
+// export class MyStack extends Stack{
+//     constructor(scope: Construct, id: string, props: StackProps = {}){
+//         super(scope, id, props)
+//     }
+// }
+
+export class VpcPeeringDemo extends Construct{
+    constructor(scope: Construct, id: string){
+        super(scope, id)
     }
 }
 
@@ -20,6 +26,9 @@ const devEnv = {
 
 const app = new App();
 
-const stack = new MyStack(app, 'my-stack-dev', {env: devEnv})
+const stack = new Stack(app, 'my-stack-dev', {env: devEnv})
+
+new VpcPeeringDemo(stack, 'demo')
+
 
 app.synth()
