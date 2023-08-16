@@ -6,6 +6,7 @@ import { Stack, StackProps } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 // https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_ec2-readme.html
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
+import { Connection } from 'aws-cdk-lib/aws-events';
 // https://youtu.be/puUpjHWW44c?t=392
 
 export interface VpcPeeringProps{
@@ -24,18 +25,22 @@ export class VpcPeering extends Construct{
         this.vpc = props.vpc ?? this._createVpc('10.0.0.0/16')
         this.peerVpc = this._createVpc('10.1.0.0/16')
 
-        new ec2.CfnVPCPeeringConnection(this, 'vpc-peering-conn', {
+        // VPC peering
+        const Connection = new ec2.CfnVPCPeeringConnection(this, 'vpc-peering-conn', {
             vpcId: this.vpc.vpcId,
             peerVpcId:this.peerVpc.vpcId,
         })
 
+        // 1st Route
         // existing VPC (private subnet) --> VPC peering --> new VPC
         new ec2.CfnRoute(this, 'exist-2-new-route', {
             routeTableId: this.vpc.privateSubnets[0].routeTable.routeTableId,
-            destinationCidrBlock: this.peerVpc.vpcCidrBlock
+            destinationCidrBlock: this.peerVpc.vpcCidrBlock,
+            vpcPeeringConnectionId: Connection.ref
         })
 
 
+        // 2nd Route
         //  new VPC --> VPC peering --> existing VPC (private subnet)
 
     }
