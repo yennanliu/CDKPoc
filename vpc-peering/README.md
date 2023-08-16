@@ -1,9 +1,35 @@
-# Welcome to your CDK TypeScript project
+# VPC Peering
 
-You should explore the contents of this project. It demonstrates a CDK app with an instance of a stack (`VpcPeeringStack`)
-which contains an Amazon SQS queue that is subscribed to an Amazon SNS topic.
+## Run
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+```bash
+aws configure
+
+
+cdk init sample-app --language typescript
+
+# show all CDK
+cdk list # or : cdk list --long
+
+# (ONLY first time) install the bootstrap stack into an environment, save needed pkg in S3
+cdk bootstrap
+
+# Synthesizes and prints the CloudFormation : template for this stack 
+cdk synth # or : cdk synthesize
+
+# diff
+cdk diff
+
+# deploy
+cdk deploy
+
+cdk deploy -c use_vpc=vpc-0305e022402e96765
+
+cdk diff -c use_vpc=vpc-0305e022402e96765
+```
+
+## Ref
+- https://www.youtube.com/watch?v=puUpjHWW44c
 
 ## Useful commands
 
