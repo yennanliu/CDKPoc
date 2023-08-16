@@ -39,9 +39,13 @@ export class VpcPeering extends Construct{
             vpcPeeringConnectionId: Connection.ref
         })
 
-
         // 2nd Route
         //  new VPC --> VPC peering --> existing VPC (private subnet)
+        new ec2.CfnRoute(this, 'new-2-exist-route', {
+            routeTableId: this.peerVpc.privateSubnets[0].routeTable.routeTableId,
+            destinationCidrBlock: this.vpc.vpcCidrBlock,
+            vpcPeeringConnectionId: Connection.ref
+        })
 
     }
 
@@ -51,9 +55,19 @@ export class VpcPeering extends Construct{
 
 }
 
+/**
+ * 
+ *  Main contruct
+ *
+ */
 export class EksPeeringDemo extends Construct{
     constructor(scope: Construct, id: string){
         super(scope, id)
+
+        const existingVpc = ec2.Vpc.fromLookup(this, 'existing-vpc', {
+            vpcId: this.node.tryGetContext('use_vpc_id')
+        })
+        new VpcPeering(this, 'vpc-peering')
     }
 }
 
@@ -62,11 +76,15 @@ const devEnv = {
     region: process.env.CDK_DEFAULT_REGION,
 }
 
+/**
+ * 
+ *  Entty point
+ *
+ */
 const app = new App();
 
 const stack = new Stack(app, 'my-stack-dev', {env: devEnv})
 
 new EksPeeringDemo(stack, 'demo')
-
 
 app.synth()
