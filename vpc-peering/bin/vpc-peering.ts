@@ -14,19 +14,36 @@ export interface VpcPeeringProps{
 }
 
 export class VpcPeering extends Construct{
+
+    readonly vpc?: ec2.IVpc
+    readonly peerVpc?: ec2.IVpc
+
     constructor(scope: Construct, id: string, props: VpcPeeringProps={}){
         super(scope, id)
 
+        this.vpc = props.vpc ?? this._createVpc('10.0.0.0/16')
+        this.peerVpc = this._createVpc('10.1.0.0/16')
+
         new ec2.CfnVPCPeeringConnection(this, 'vpc-peering-conn', {
-            vpcId: props.vpc ? props.vpc.vpcId : this._createVpc('10.0.0.0/16').vpcId,
-            peerVpcId:this._createVpc('10.1.0.0/16').vpcId,
+            vpcId: this.vpc.vpcId,
+            peerVpcId:this.peerVpc.vpcId,
         })
+
+        // existing VPC (private subnet) --> VPC peering --> new VPC
+        new ec2.CfnRoute(this, 'exist-2-new-route', {
+            routeTableId: this.vpc.privateSubnets[0].routeTable.routeTableId,
+            destinationCidrBlock: this.peerVpc.vpcCidrBlock
+        })
+
+
+        //  new VPC --> VPC peering --> existing VPC (private subnet)
 
     }
 
     private _createVpc(cidr: string): ec2.IVpc {
-        return new ec2.Vpc(this, 'dummy-vpc', {natGateways: 1})
+        return new ec2.Vpc(this, 'dummy-vpc', {natGateways: 1, cidr: cidr})
     }
+
 }
 
 export class EksPeeringDemo extends Construct{
